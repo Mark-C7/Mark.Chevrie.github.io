@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mark Chevrie — Maker & Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #0d1f3c;
+      --navy-mid: #1a3560;
+      --navy-light: #2a4a7f;
+      --white: #f8f7f4;
+      --off-white: #eeecea;
+      --accent: #c8923a;
+      --accent-light: #e8b870;
+      --gray: #8a9ab5;
+      --gray-light: #d4dae6;
+      --rule: #c2ccd8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--white);
+      color: var(--navy);
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: var(--white);
+      border-bottom: 1px solid var(--rule);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4rem;
+      height: 56px;
+    }
+    .nav-logo {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      color: var(--navy);
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--navy); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 56px;
+    }
+    .hero-left {
+      background: var(--navy);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 5rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-left::before {
+      content: '';
+      position: absolute;
+      top: -120px; right: -120px;
+      width: 400px; height: 400px;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 50%;
+    }
+    .hero-left::after {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 240px; height: 240px;
+      border: 1px solid rgba(255,255,255,0.04);
+      border-radius: 50%;
+    }
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+    .hero-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(3rem, 5vw, 4.5rem);
+      line-height: 1.05;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+    }
+    .hero-name em {
+      font-style: italic;
+      color: var(--accent-light);
+    }
+    .hero-desc {
+      font-size: 1rem;
+      color: var(--gray);
+      max-width: 380px;
+      line-height: 1.7;
+      margin-bottom: 3rem;
+    }
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+      border: 1px solid rgba(255,255,255,0.15);
+      color: var(--gray);
+      border-radius: 2px;
+    }
+
+    .hero-right {
+      background: var(--off-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem;
+      position: relative;
+    }
+    .hero-blueprint {
+      width: 100%;
+      max-width: 420px;
+      aspect-ratio: 1;
+      border: 1px solid var(--rule);
+      background: var(--white);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .hero-blueprint::before {
+      content: '';
+      position: absolute;
+      inset: 16px;
+      border: 1px dashed var(--gray-light);
+    }
+    .blueprint-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      z-index: 1;
+    }
+    .blueprint-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+    .blueprint-fig {
+      width: 200px;
+      height: 200px;
+    }
+    /* Simple SVG gear/cog as decorative element */
+    .hero-ref {
+      position: absolute;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--gray);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── SECTION COMMON ── */
+    section { padding: 6rem 4rem; }
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    .section-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+    }
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      color: var(--navy);
+    }
+    .section-rule {
+      flex: 1;
+      height: 1px;
+      background: var(--rule);
+    }
+
+    /* ── PROJECTS ── */
+    #projects { background: var(--white); }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+    }
+    .project-card {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      overflow: hidden;
+      transition: box-shadow 0.3s, transform 0.3s;
+      position: relative;
+    }
+    .project-card:hover {
+      box-shadow: 0 12px 40px rgba(13,31,60,0.12);
+      transform: translateY(-2px);
+      z-index: 2;
+    }
+    .project-card.featured {
+      grid-column: span 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .card-image {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      display: block;
+      background: var(--off-white);
+      position: relative;
+    }
+    .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .card-image-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      background: var(--off-white);
+      color: var(--gray);
+    }
+    .card-image-placeholder svg {
+      width: 48px;
+      height: 48px;
+      opacity: 0.3;
+    }
+    .placeholder-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .card-body {
+      padding: 2rem;
+    }
+    .project-card.featured .card-body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 3rem;
+    }
+    .card-category {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+    .card-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.6rem;
+      color: var(--navy);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    .project-card:not(.featured) .card-title {
+      font-size: 1.25rem;
+    }
+    .card-desc {
+      font-size: 0.9rem;
+      color: #4a5f80;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+    .card-skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .skill-chip {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      background: var(--off-white);
+      color: var(--navy-mid);
+      border-radius: 2px;
+    }
+    .coming-soon-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.7rem;
+      background: var(--navy);
+      color: var(--accent-light);
+      border-radius: 2px;
+    }
+
+    /* ── SKILLS ── */
+    #skills { background: var(--navy); }
+    #skills .section-title { color: var(--white); }
+    #skills .section-num { color: var(--accent-light); }
+    #skills .section-rule { background: rgba(255,255,255,0.1); }
+    #skills .section-header { border-bottom-color: rgba(255,255,255,0.1); }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.06);
+    }
+    .skill-block {
+      background: var(--navy);
+      padding: 2.5rem 2rem;
+      transition: background 0.2s;
+    }
+    .skill-block:hover { background: var(--navy-mid); }
+    .skill-block-icon {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .skill-block-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+      color: var(--white);
+      margin-bottom: 0.75rem;
+    }
+    .skill-block-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .skill-block-list li {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--gray);
+      letter-spacing: 0.04em;
+      padding-left: 1rem;
+      position: relative;
+    }
+    .skill-block-list li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    /* ── DRAWINGS ── */
+    #drawings { background: var(--off-white); }
+    .drawings-intro {
+      font-size: 0.95rem;
+      color: #4a5f80;
+      max-width: 600px;
+      margin-bottom: 3rem;
+      line-height: 1.7;
+    }
+    .drawings-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .drawing-card {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      overflow: hidden;
+    }
+    .drawing-preview {
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--navy);
+      position: relative;
+      overflow: hidden;
+    }
+    .drawing-preview-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.7;
+    }
+    .drawing-preview-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      width: 100%;
+      height: 100%;
+    }
+    .drawing-grid-lines {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+    .drawing-pending {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      z-index: 1;
+    }
+    .drawing-icon {
+      z-index: 1;
+      opacity: 0.4;
+    }
+    .drawing-body { padding: 1.25rem 1.5rem; }
+    .drawing-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1rem;
+      color: var(--navy);
+      margin-bottom: 0.4rem;
+    }
+    .drawing-meta {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--gray);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      background: var(--white);
+      text-align: center;
+      padding: 6rem 4rem;
+    }
+    .contact-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+    .contact-heading {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--navy);
+      margin-bottom: 1rem;
+    }
+    .contact-sub {
+      font-size: 0.95rem;
+      color: #4a5f80;
+      margin-bottom: 3rem;
+    }
+    .contact-btn {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background: var(--navy);
+      color: var(--white);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .contact-btn:hover {
+      background: var(--navy-mid);
+      transform: translateY(-1px);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      padding: 2rem 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-name {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+    .footer-note {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: rgba(138,154,181,0.5);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── ANIMATIONS ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 0 1.5rem; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .hero-left { padding: 4rem 2rem; min-height: calc(100vh - 56px); }
+      section { padding: 4rem 1.5rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .project-card.featured { grid-column: span 1; grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .drawings-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">Mark Chevrie</a>
+    <ul class="nav-links">
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#drawings">Drawings</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Engineering Portfolio</p>
+      <h1 class="hero-name">Mark<br><em>Chevrie</em></h1>
+      <p class="hero-desc">Hands-on maker and engineer with a passion for building things from the ground up — from precision-machined components to full-scale electric vehicles and medieval siege engines.</p>
+      <div class="hero-tags">
+        <span class="tag">Metal Fabrication</span>
+        <span class="tag">CNC Machining</span>
+        <span class="tag">3D Printing</span>
+        <span class="tag">Electrical Systems</span>
+        <span class="tag">Structural Design</span>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-blueprint">
+        <div class="blueprint-inner">
+          <span class="blueprint-label">Fig. 1 — Engineering Profile</span>
+          <svg class="blueprint-fig" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Gear / cog decorative SVG -->
+            <circle cx="100" cy="100" r="55" stroke="#0d1f3c" stroke-width="1" stroke-dasharray="4 4"/>
+            <circle cx="100" cy="100" r="35" stroke="#0d1f3c" stroke-width="1.5"/>
+            <circle cx="100" cy="100" r="12" stroke="#c8923a" stroke-width="1.5"/>
+            <!-- Gear teeth -->
+            <g stroke="#0d1f3c" stroke-width="2">
+              <line x1="100" y1="40" x2="100" y2="30"/>
+              <line x1="100" y1="160" x2="100" y2="170"/>
+              <line x1="40" y1="100" x2="30" y2="100"/>
+              <line x1="160" y1="100" x2="170" y2="100"/>
+              <line x1="59" y1="59" x2="52" y2="52"/>
+              <line x1="141" y1="141" x2="148" y2="148"/>
+              <line x1="141" y1="59" x2="148" y2="52"/>
+              <line x1="59" y1="141" x2="52" y2="148"/>
+            </g>
+            <!-- Crosshairs -->
+            <line x1="100" y1="85" x2="100" y2="115" stroke="#c8923a" stroke-width="1"/>
+            <line x1="85" y1="100" x2="115" y2="100" stroke="#c8923a" stroke-width="1"/>
+            <!-- Dimension lines -->
+            <line x1="20" y1="180" x2="180" y2="180" stroke="#8a9ab5" stroke-width="0.5"/>
+            <line x1="20" y1="175" x2="20" y2="185" stroke="#8a9ab5" stroke-width="0.5"/>
+            <line x1="180" y1="175" x2="180" y2="185" stroke="#8a9ab5" stroke-width="0.5"/>
+            <text x="100" y="194" text-anchor="middle" font-family="monospace" font-size="8" fill="#8a9ab5">36.00"</text>
+            <line x1="5" y1="20" x2="5" y2="165" stroke="#8a9ab5" stroke-width="0.5"/>
+            <line x1="0" y1="20" x2="10" y2="20" stroke="#8a9ab5" stroke-width="0.5"/>
+            <line x1="0" y1="165" x2="10" y2="165" stroke="#8a9ab5" stroke-width="0.5"/>
+            <text x="-45" y="95" text-anchor="middle" font-family="monospace" font-size="8" fill="#8a9ab5" transform="rotate(-90 -45 95)">60.00"</text>
+          </svg>
+          <span class="blueprint-label">Maker &amp; Engineer</span>
+        </div>
+        <span class="hero-ref">REV A · 2025</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Projects</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="projects-grid">
+
+      <!-- FEATURED: Electric Go-Kart -->
+      <div class="project-card featured reveal">
+        <div class="card-image">
+          <img src="IMG_5633.jpg" alt="Electric Go-Kart" onerror="this.parentElement.innerHTML='<div class=\'card-image-placeholder\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><circle cx=\'8.5\' cy=\'8.5\' r=\'1.5\'/><path d=\'m21 15-5-5L5 21\'/></svg><span class=\'placeholder-label\'>IMG_5633.jpg</span></div>'"/>
+        </div>
+        <div class="card-body">
+          <p class="card-category">Electric Vehicle · Fabrication</p>
+          <h3 class="card-title">Electric Go-Kart</h3>
+          <p class="card-desc">Custom-built electric go-kart on a powder-coated red tubular steel frame. Features a LiFePO4 battery pack, motor controller, wiring harness, and kill switch — all designed and assembled from scratch using hand-drawn layout drawings scaled to a 36" × 60" footprint.</p>
+          <div class="card-skills">
+            <span class="skill-chip">Metal Fabrication</span>
+            <span class="skill-chip">Electrical Systems</span>
+            <span class="skill-chip">Drivetrain Design</span>
+            <span class="skill-chip">Wiring / Harness</span>
+            <span class="skill-chip">Technical Drafting</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trebuchet -->
+      <div class="project-card reveal">
+        <div class="card-image" style="position:relative;">
+          <img src="IMG_5956.jpg" alt="Full-Scale Trebuchet" onerror="this.parentElement.innerHTML='<div class=\'card-image-placeholder\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><circle cx=\'8.5\' cy=\'8.5\' r=\'1.5\'/><path d=\'m21 15-5-5L5 21\'/></svg><span class=\'placeholder-label\'>IMG_5956.jpg</span></div>'"/>
+          <span class="coming-soon-badge">CAD Drawings Pending</span>
+        </div>
+        <div class="card-body">
+          <p class="card-category">Structural Engineering · Large-Scale Build</p>
+          <h3 class="card-title">Full-Scale Trebuchet</h3>
+          <p class="card-desc">A full-size wooden trebuchet built and fired in the desert. Structural timber frame with counterweight box, pivot bearing assembly, and sling mechanism — designed from first principles using projectile physics calculations.</p>
+          <div class="card-skills">
+            <span class="skill-chip">Structural Design</span>
+            <span class="skill-chip">Large-Scale Fabrication</span>
+            <span class="skill-chip">Physics Calculations</span>
+            <span class="skill-chip">Timber Joinery</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Precision Machining -->
+      <div class="project-card reveal">
+        <div class="card-image">
+          <img src="IMG_4220.JPG" alt="Precision Machined Thumb Nut" onerror="this.parentElement.innerHTML='<div class=\'card-image-placeholder\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><circle cx=\'8.5\' cy=\'8.5\' r=\'1.5\'/><path d=\'m21 15-5-5L5 21\'/></svg><span class=\'placeholder-label\'>IMG_4220.JPG</span></div>'"/>
+        </div>
+        <div class="card-body">
+          <p class="card-category">Precision Machining · CNC</p>
+          <h3 class="card-title">Precision Machined Components</h3>
+          <p class="card-desc">Lathe-turned stainless steel knurled thumb nut with threaded center bore and chamfered top face. Work produced in a professional machine shop environment using digital calipers, micrometers, and surface plates alongside full blueprint reading.</p>
+          <div class="card-skills">
+            <span class="skill-chip">Manual / CNC Machining</span>
+            <span class="skill-chip">GD&amp;T</span>
+            <span class="skill-chip">Precision Measurement</span>
+            <span class="skill-chip">Blueprint Reading</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Linear Rail LED Rig -->
+      <div class="project-card reveal">
+        <div class="card-image">
+          <img src="IMG_8895.jpg" alt="Linear Rail LED Rig" onerror="this.parentElement.innerHTML='<div class=\'card-image-placeholder\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><circle cx=\'8.5\' cy=\'8.5\' r=\'1.5\'/><path d=\'m21 15-5-5L5 21\'/></svg><span class=\'placeholder-label\'>IMG_8895.jpg</span></div>'"/>
+        </div>
+        <div class="card-body">
+          <p class="card-category">3D Printing · Electronics</p>
+          <h3 class="card-title">Linear Rail LED / Sensor Rig</h3>
+          <p class="card-desc">3D-printed housing with integrated high-brightness LED mounted on hardened steel linear guide rods with custom 3D-printed clamp rings. Designed for precise linear positioning of a light or sensor module.</p>
+          <div class="card-skills">
+            <span class="skill-chip">3D Printing</span>
+            <span class="skill-chip">Electronics Integration</span>
+            <span class="skill-chip">Fixture Design</span>
+            <span class="skill-chip">FDM Design</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Servo Spool -->
+      <div class="project-card reveal">
+        <div class="card-image">
+          <img src="Portfolio.png" alt="Servo Spool Mechanism" onerror="this.parentElement.innerHTML='<div class=\'card-image-placeholder\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><circle cx=\'8.5\' cy=\'8.5\' r=\'1.5\'/><path d=\'m21 15-5-5L5 21\'/></svg><span class=\'placeholder-label\'>Portfolio.png</span></div>'"/>
+        </div>
+        <div class="card-body">
+          <p class="card-category">Mechatronics · Robotics</p>
+          <h3 class="card-title">Servo Spool Mechanism</h3>
+          <p class="card-desc">3D-printed spool and reel assembly housing an internal servo motor powered by a LiPo battery. Designed for robotics actuation, RC systems, or tension control — showcasing tight integration of electronics within a compact printed structure.</p>
+          <div class="card-skills">
+            <span class="skill-chip">3D Design</span>
+            <span class="skill-chip">Servo Integration</span>
+            <span class="skill-chip">Mechatronics</span>
+            <span class="skill-chip">LiPo Systems</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cat Tree -->
+      <div class="project-card reveal">
+        <div class="card-image">
+          <img src="IMG_0975.jpg" alt="Custom Cat Tree" onerror="this.parentElement.innerHTML='<div class=\'card-image-placeholder\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><circle cx=\'8.5\' cy=\'8.5\' r=\'1.5\'/><path d=\'m21 15-5-5L5 21\'/></svg><span class=\'placeholder-label\'>IMG_0975.jpg</span></div>'"/>
+        </div>
+        <div class="card-body">
+          <p class="card-category">Woodworking · Assembly</p>
+          <h3 class="card-title">Multi-Level Cat Tree</h3>
+          <p class="card-desc">Multi-level carpeted cat tree with sisal rope scratching posts, enclosed hideaway den, angled ramp, and elevated perch platform — fully assembled from components, demonstrating spatial planning and structural assembly skills.</p>
+          <div class="card-skills">
+            <span class="skill-chip">Woodworking</span>
+            <span class="skill-chip">Assembly</span>
+            <span class="skill-chip">Spatial Planning</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Skills &amp; Capabilities</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-block reveal">
+        <div class="skill-block-icon">⚙️</div>
+        <h3 class="skill-block-title">Metal Fabrication</h3>
+        <ul class="skill-block-list">
+          <li>Steel tube frame construction</li>
+          <li>MIG/TIG welding</li>
+          <li>Powder coat prep &amp; finishing</li>
+          <li>Structural layout &amp; fit-up</li>
+        </ul>
+      </div>
+      <div class="skill-block reveal">
+        <div class="skill-block-icon">🔩</div>
+        <h3 class="skill-block-title">Precision Machining</h3>
+        <ul class="skill-block-list">
+          <li>Manual lathe &amp; mill operation</li>
+          <li>CNC setup &amp; programming</li>
+          <li>GD&amp;T &amp; blueprint reading</li>
+          <li>Micrometer &amp; caliper measurement</li>
+        </ul>
+      </div>
+      <div class="skill-block reveal">
+        <div class="skill-block-icon">🖨️</div>
+        <h3 class="skill-block-title">3D Printing &amp; Design</h3>
+        <ul class="skill-block-list">
+          <li>FDM part design &amp; optimization</li>
+          <li>Functional mechanical assemblies</li>
+          <li>Electronics enclosure design</li>
+          <li>Custom fixtures &amp; jigs</li>
+        </ul>
+      </div>
+      <div class="skill-block reveal">
+        <div class="skill-block-icon">⚡</div>
+        <h3 class="skill-block-title">Electrical Systems</h3>
+        <ul class="skill-block-list">
+          <li>12V–48V DC wiring &amp; harness</li>
+          <li>Motor controller integration</li>
+          <li>LiPo / LiFePO4 battery systems</li>
+          <li>Kill switches &amp; safety circuits</li>
+        </ul>
+      </div>
+      <div class="skill-block reveal">
+        <div class="skill-block-icon">📐</div>
+        <h3 class="skill-block-title">Structural Design</h3>
+        <ul class="skill-block-list">
+          <li>Hand sketching &amp; layout drafting</li>
+          <li>Load path analysis</li>
+          <li>Timber &amp; steel structures</li>
+          <li>Projectile physics calculations</li>
+        </ul>
+      </div>
+      <div class="skill-block reveal">
+        <div class="skill-block-icon">🤖</div>
+        <h3 class="skill-block-title">Mechatronics</h3>
+        <ul class="skill-block-list">
+          <li>Servo &amp; actuator integration</li>
+          <li>RC &amp; robotics systems</li>
+          <li>Sensor &amp; LED rig design</li>
+          <li>Electromechanical assemblies</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECHNICAL DRAWINGS -->
+  <section id="drawings">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Technical Drawings</h2>
+      <div class="section-rule"></div>
+    </div>
+    <p class="drawings-intro">Dimensioned drawings, CAD models, and layout sketches are available for all projects. Full drawing packages available on request. Additional CAD screenshots will be added as projects are documented.</p>
+    <div class="drawings-grid">
+
+      <div class="drawing-card reveal">
+        <div class="drawing-preview">
+          <img class="drawing-preview-img" src="IMG_2201.jpg" alt="Go-Kart Layout Drawing" onerror="this.style.display='none'"/>
+          <div class="drawing-grid-lines"></div>
+        </div>
+        <div class="drawing-body">
+          <h4 class="drawing-title">Go-Kart — Layout Sketch</h4>
+          <p class="drawing-meta">Hand-drafted · 36" × 60" · Top View</p>
+        </div>
+      </div>
+
+      <div class="drawing-card reveal">
+        <div class="drawing-preview">
+          <div class="drawing-grid-lines"></div>
+          <div class="drawing-preview-placeholder">
+            <svg class="drawing-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#8a9ab5" stroke-width="1">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+              <polyline points="10 9 9 9 8 9"/>
+            </svg>
+            <span class="drawing-pending">CAD Drawings Pending</span>
+          </div>
+        </div>
+        <div class="drawing-body">
+          <h4 class="drawing-title">Trebuchet — Structural Drawings</h4>
+          <p class="drawing-meta">CAD · Full Assembly · Coming Soon</p>
+        </div>
+      </div>
+
+      <div class="drawing-card reveal">
+        <div class="drawing-preview">
+          <div class="drawing-grid-lines"></div>
+          <div class="drawing-preview-placeholder">
+            <svg class="drawing-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#8a9ab5" stroke-width="1">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="12" x2="16" y2="14"/>
+            </svg>
+            <span class="drawing-pending">Available on Request</span>
+          </div>
+        </div>
+        <div class="drawing-body">
+          <h4 class="drawing-title">Machined Parts — Detail Drawings</h4>
+          <p class="drawing-meta">Blueprint · Toleranced · GD&amp;T</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="contact-eyebrow">Get In Touch</p>
+    <h2 class="contact-heading">Let's build something.</h2>
+    <p class="contact-sub">Open to engineering roles, freelance fabrication work, and interesting projects.</p>
+    <a href="mailto:mark@example.com" class="contact-btn">mark@example.com</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-name">Mark Chevrie — Maker &amp; Engineer</span>
+    <span class="footer-note">Portfolio · REV A · 2025</span>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
